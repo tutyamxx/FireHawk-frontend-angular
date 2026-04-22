@@ -1,0 +1,39 @@
+<div>
+    <input
+        type="text"
+        placeholder="Search cars..."
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+    />
+
+    <button (click)="exportCSV()">Export CSV</button>
+    <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Make</th>
+                <th>Model</th>
+                <th>MPG</th>
+                <th>Cylinders</th>
+                <th>Horsepower</th>
+                <th>Year</th>
+                <th>Origin</th>
+                <th>Efficiency</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let car of filteredCars">
+                <td>{{ car.make }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.mpg }}</td>
+                <td>{{ car.cylinders }}</td>
+                <td>{{ car.horsepower }}</td>
+                <td>{{ car.model_year }}</td>
+                <td>{{ car.origin }}</td>
+                <td>{{ car.efficiency }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

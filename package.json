@@ -1,0 +1,36 @@
+{
+    "name": "frontend",
+    "version": "0.0.0",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build",
+        "watch": "ng build --watch --configuration development",
+        "test": "ng test",
+        "format": "prettier --write ."
+    },
+    "private": true,
+    "packageManager": "npm@11.12.1",
+    "dependencies": {
+        "@angular/common": "^20.3.0",
+        "@angular/compiler": "^20.3.0",
+        "@angular/core": "^20.3.0",
+        "@angular/fire": "^20.0.1",
+        "@angular/forms": "^20.3.0",
+        "@angular/platform-browser": "^20.3.0",
+        "@angular/router": "^20.3.0",
+        "firebase": "^12.12.1",
+        "rxjs": "~7.8.0",
+        "tslib": "^2.3.0",
+        "zone.js": "^0.15.1"
+    },
+    "devDependencies": {
+        "@angular/build": "^20.3.0",
+        "@angular/cli": "^20.3.0",
+        "@angular/compiler-cli": "^20.3.0",
+        "jsdom": "^28.0.0",
+        "prettier": "^3.8.3",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
+    }
+}

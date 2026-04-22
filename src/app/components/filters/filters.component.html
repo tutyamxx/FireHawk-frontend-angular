@@ -1,0 +1,18 @@
+<div>
+    <input placeholder="Make" [(ngModel)]="filters.make" (input)="update()" />
+    <input placeholder="Origin" [(ngModel)]="filters.origin" (input)="update()" />
+
+    <select [(ngModel)]="filters.cylinders" (change)="update()">
+        <option value="">All Cylinders</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+    </select>
+
+    <select [(ngModel)]="filters.efficiency" (change)="update()">
+        <option value="">All Efficiency</option>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+    </select>
+</div>
