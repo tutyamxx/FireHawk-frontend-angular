@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,14 +8,14 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './filters.component.html',
 })
 export class FiltersComponent {
-    @Output() filtersChanged = new EventEmitter<any>();
-
-    filters = {
+    @Input() filters: any = {
         make: '',
         origin: '',
         cylinders: '',
         efficiency: '',
     };
+
+    @Output() filtersChanged = new EventEmitter<any>();
 
     update = (): void => {
         this.filtersChanged.emit(this.filters);

@@ -7,7 +7,6 @@ import { environment } from '../../environments/environment';
 @Injectable({
     providedIn: 'root',
 })
-
 export class CarService {
     private apiUrl = `${environment?.apiUrl}/cars`;
 
@@ -15,9 +14,7 @@ export class CarService {
 
     // --| GET all cars from backend
     getCars = (): Observable<Car[]> => {
-        return this.http.get<Car[]>(this.apiUrl).pipe(map((cars) =>
-            (cars ?? []).map((car) => this.transform(car))
-        ));
+        return this.http.get<Car[]>(this.apiUrl).pipe(map(cars => (cars ?? []).map(car => this.transform(car))));
     };
 
     // --| Transform logic

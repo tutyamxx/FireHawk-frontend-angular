@@ -30,21 +30,23 @@ export class CarTableComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.filters = this.storage.load('filters') || {};
+        const savedFilters = this.storage.load('filters');
+        this.filters = savedFilters || {};
 
         console.log('CarTable init started');
         console.log('Loaded filters:', this.filters);
 
         this.carService.getCars().subscribe({
-            next: (data) => {
+            next: data => {
                 console.log('Cars loaded from Firestore:', data);
 
                 this.cars = data || [];
                 this.loading = false;
+
                 this.applyFilters();
             },
 
-            error: (err) => {
+            error: err => {
                 console.error('Firestore error:', err);
 
                 this.loading = false;
@@ -58,25 +60,17 @@ export class CarTableComponent implements OnInit {
         console.log('Applying filters:', this.filters);
         console.log('Total cars before filter:', this.cars.length);
 
+        const search = this.searchTerm.toLowerCase();
+
         this.filteredCars = (this.cars || [])
             .filter(
-                (car) =>
-                    (car?.make ?? '')
-                        .toLowerCase()
-                        .includes(this.filters?.make?.toLowerCase() || '') &&
-                    (car?.origin ?? '')
-                        .toLowerCase()
-                        .includes(this.filters?.origin?.toLowerCase() || '') &&
-                    (this.filters?.cylinders
-                        ? car?.cylinders === Number(this.filters.cylinders)
-                        : true) &&
+                car =>
+                    (car?.make ?? '').toLowerCase().includes(this.filters?.make?.toLowerCase() || '') &&
+                    (car?.origin ?? '').toLowerCase().includes(this.filters?.origin?.toLowerCase() || '') &&
+                    (this.filters?.cylinders ? car?.cylinders === Number(this.filters.cylinders) : true) &&
                     (this.filters?.efficiency ? car?.efficiency === this.filters.efficiency : true),
             )
-            .filter((car) =>
-                Object.values(car || {}).some((v) =>
-                    (v ?? '').toString().toLowerCase().includes(this.searchTerm.toLowerCase()),
-                ),
-            );
+            .filter(car => Object.values(car || {}).some(v => (v ?? '').toString().toLowerCase().includes(search)));
 
         console.log('Filtered cars:', this.filteredCars.length);
     };
@@ -87,6 +81,11 @@ export class CarTableComponent implements OnInit {
         this.filters = filters || {};
         this.storage.save('filters', this.filters);
 
+        this.applyFilters();
+    };
+
+    onSearchChanged = (): void => {
+        this.storage.save('searchTerm', this.searchTerm);
         this.applyFilters();
     };
 

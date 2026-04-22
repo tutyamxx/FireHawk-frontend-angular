@@ -4,7 +4,6 @@ import { Car } from '../models/car.model';
 @Injectable({
     providedIn: 'root',
 })
-
 export class CsvService {
     export = (cars: Car[]): void => {
         if (!cars?.length) {
@@ -18,7 +17,7 @@ export class CsvService {
     // --| Build CSV string
     private buildCsv = (cars: Car[]): string => {
         const headers = Object.keys(cars[0]) as (keyof Car)[];
-        const rows = cars.map((car) => headers.map((header) => `"${car?.[header] ?? ''}"`).join(','));
+        const rows = cars.map(car => headers.map(header => `"${car?.[header] ?? ''}"`).join(','));
 
         return [headers.join(','), ...rows].join('\n');
     };

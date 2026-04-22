@@ -1,13 +1,9 @@
 <div>
-    <input
-        type="text"
-        placeholder="Search cars..."
-        [(ngModel)]="searchTerm"
-        (input)="applyFilters()"
-    />
+    <input type="text" placeholder="Search cars..." [(ngModel)]="searchTerm" (input)="applyFilters()" />
 
     <button (click)="exportCSV()">Export CSV</button>
-    <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
+
+    <app-filters [filters]="filters" (filtersChanged)="onFiltersChanged($event)"> </app-filters>
 
     <table>
         <thead>
