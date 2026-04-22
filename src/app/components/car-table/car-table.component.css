@@ -1,0 +1,124 @@
+.container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 32px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.toolbar mat-form-field {
+    flex: 1;
+    max-width: 340px;
+    min-width: 240px;
+}
+
+.toolbar ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+.toolbar button {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 0 24px;
+    font-weight: 500;
+    box-shadow: none !important;
+}
+
+.export-btn {
+    background-color: #22c55e !important;
+    color: white !important;
+}
+
+.export-btn:hover {
+    background-color: #16a34a !important;
+}
+
+.reset-btn {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.reset-btn:hover {
+    background-color: #2563eb !important;
+}
+
+table {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mat-mdc-header-cell {
+    font-weight: 600;
+    background: #f8fafc;
+    color: #475569;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+    padding: 16px !important;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    background: #f1f5ff;
+    transition: 0.2s ease;
+}
+
+.mat-elevation-z8 {
+    box-shadow:
+        0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.empty {
+    text-align: center;
+    padding: 64px;
+    color: #9ca3af;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar mat-form-field {
+        max-width: 100%;
+    }
+
+    .toolbar button {
+        width: 100%;
+    }
+}

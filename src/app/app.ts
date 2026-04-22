@@ -7,7 +7,6 @@ import { CarTableComponent } from './components/car-table/car-table.component';
     imports: [CarTableComponent],
     template: `
         <div class="app-container">
-            <h1>Cars Database</h1>
             <app-car-table />
         </div>
     `,

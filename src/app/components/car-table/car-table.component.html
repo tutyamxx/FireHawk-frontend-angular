@@ -1,35 +1,90 @@
-<div>
-    <input type="text" placeholder="Search cars..." [(ngModel)]="searchTerm" (input)="applyFilters()" />
+<div class="container">
+    <h1 class="title">Car Data Dashboard</h1>
+    <p class="subtitle">Browse, filter and export your car collection</p>
 
-    <button (click)="exportCSV()">Export CSV</button>
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <mat-form-field appearance="outline">
+            <mat-label>Search cars</mat-label>
+            <input matInput [(ngModel)]="searchTerm" (input)="onSearchChanged()" />
+        </mat-form-field>
 
-    <app-filters [filters]="filters" (filtersChanged)="onFiltersChanged($event)"> </app-filters>
+        <button mat-raised-button class="export-btn" (click)="exportCSV()">
+            <mat-icon>download</mat-icon>
+            Export CSV
+        </button>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Make</th>
-                <th>Model</th>
-                <th>MPG</th>
-                <th>Cylinders</th>
-                <th>Horsepower</th>
-                <th>Year</th>
-                <th>Origin</th>
-                <th>Efficiency</th>
-            </tr>
-        </thead>
+        <button mat-raised-button class="reset-btn" (click)="resetFilters()">Reset</button>
+    </div>
 
-        <tbody>
-            <tr *ngFor="let car of filteredCars">
-                <td>{{ car.make }}</td>
-                <td>{{ car.model }}</td>
-                <td>{{ car.mpg }}</td>
-                <td>{{ car.cylinders }}</td>
-                <td>{{ car.horsepower }}</td>
-                <td>{{ car.model_year }}</td>
-                <td>{{ car.origin }}</td>
-                <td>{{ car.efficiency }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Filters -->
+    <app-filters [filters]="filters" (filtersChanged)="onFiltersChanged($event)"></app-filters>
+
+    <!-- Loading -->
+    @if (loading) {
+        <div class="loading">
+            <mat-spinner></mat-spinner>
+        </div>
+    }
+
+    <!-- Empty state -->
+    @if (!loading && filteredCars.length === 0) {
+        <div class="empty">No cars match your filters.</div>
+    }
+
+    <!-- Table -->
+    @if (!loading && filteredCars.length > 0) {
+        <table mat-table [dataSource]="pagedCars" class="mat-elevation-z8">
+            <ng-container matColumnDef="make">
+                <th mat-header-cell *matHeaderCellDef>Make</th>
+                <td mat-cell *matCellDef="let car">{{ car.make }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="model">
+                <th mat-header-cell *matHeaderCellDef>Model</th>
+                <td mat-cell *matCellDef="let car">{{ car.model }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="mpg">
+                <th mat-header-cell *matHeaderCellDef>MPG</th>
+                <td mat-cell *matCellDef="let car">{{ car.mpg }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="cylinders">
+                <th mat-header-cell *matHeaderCellDef>Cyl</th>
+                <td mat-cell *matCellDef="let car">{{ car.cylinders }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="horsepower">
+                <th mat-header-cell *matHeaderCellDef>HP</th>
+                <td mat-cell *matCellDef="let car">{{ car.horsepower }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="year">
+                <th mat-header-cell *matHeaderCellDef>Year</th>
+                <td mat-cell *matCellDef="let car">{{ car.model_year }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="origin">
+                <th mat-header-cell *matHeaderCellDef>Origin</th>
+                <td mat-cell *matCellDef="let car">{{ car.origin }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="efficiency">
+                <th mat-header-cell *matHeaderCellDef>Efficiency</th>
+                <td mat-cell *matCellDef="let car">{{ car.efficiency }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator
+            [length]="filteredCars.length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 20, 50]"
+            (page)="onPageChange($event)"
+        >
+        </mat-paginator>
+    }
 </div>

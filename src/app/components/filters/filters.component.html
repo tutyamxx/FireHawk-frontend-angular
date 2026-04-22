@@ -1,18 +1,31 @@
-<div>
-    <input placeholder="Make" [(ngModel)]="filters.make" (input)="update()" />
-    <input placeholder="Origin" [(ngModel)]="filters.origin" (input)="update()" />
+<div class="filters">
+    <mat-form-field appearance="outline">
+        <mat-label>Make</mat-label>
+        <input matInput [(ngModel)]="filters.make" (input)="update()" />
+    </mat-form-field>
 
-    <select [(ngModel)]="filters.cylinders" (change)="update()">
-        <option value="">All Cylinders</option>
-        <option value="4">4</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-    </select>
+    <mat-form-field appearance="outline">
+        <mat-label>Origin</mat-label>
+        <input matInput [(ngModel)]="filters.origin" (input)="update()" />
+    </mat-form-field>
 
-    <select [(ngModel)]="filters.efficiency" (change)="update()">
-        <option value="">All Efficiency</option>
-        <option value="High">High</option>
-        <option value="Medium">Medium</option>
-        <option value="Low">Low</option>
-    </select>
+    <mat-form-field appearance="outline">
+        <mat-label>Cylinders</mat-label>
+        <mat-select [(ngModel)]="filters.cylinders" (selectionChange)="update()">
+            <mat-option value="">All Cylinders</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="6">6</mat-option>
+            <mat-option value="8">8</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Efficiency</mat-label>
+        <mat-select [(ngModel)]="filters.efficiency" (selectionChange)="update()">
+            <mat-option value="">All Efficiency</mat-option>
+            <mat-option value="High">High</mat-option>
+            <mat-option value="Medium">Medium</mat-option>
+            <mat-option value="Low">Low</mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>

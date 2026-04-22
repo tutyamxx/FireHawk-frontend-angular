@@ -19,13 +19,12 @@ export class CarService {
 
     // --| Transform logic
     transform = (car: Car): Car => {
-        const parts = car?.name?.split(' ') ?? [];
         const mpg = Number(car?.mpg ?? 0);
 
         return {
             ...car,
-            make: parts?.[0] ?? car?.make,
-            model: parts?.slice(1)?.join(' ') ?? car?.model,
+            make: car?.make ?? '',
+            model: car?.model ?? '',
             efficiency: this.getEfficiency(mpg),
         };
     };
