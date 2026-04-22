@@ -1,37 +1,51 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Car } from '../models/car.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
+
 export class CarService {
-    constructor(private firestore: Firestore) {}
+    private apiUrl = `${environment?.apiUrl}/cars`;
 
+    constructor(private http: HttpClient) {}
+
+    // --| GET all cars from backend
     getCars = (): Observable<Car[]> => {
-        const ref = collection(this.firestore, 'cars');
-
-        return collectionData(ref, { idField: 'id' }).pipe(
-            map((cars) => cars.map((car) => this.transform(car as Car))),
-        );
+        return this.http.get<Car[]>(this.apiUrl).pipe(map((cars) =>
+            (cars ?? []).map((car) => this.transform(car))
+        ));
     };
 
+    // --| Transform logic
     transform = (car: Car): Car => {
-        const parts = car?.name?.split(' ') || [];
-        const mpg = Number(car?.mpg);
+        const parts = car?.name?.split(' ') ?? [];
+        const mpg = Number(car?.mpg ?? 0);
 
         return {
             ...car,
-            make: parts[0],
-            model: parts.slice(1).join(' '),
+            make: parts?.[0] ?? car?.make,
+            model: parts?.slice(1)?.join(' ') ?? car?.model,
             efficiency: this.getEfficiency(mpg),
         };
     };
 
-    getEfficiency = (mpg: number): 'High' | 'Medium' | 'Low' => {
-        if (mpg > 30) return 'High';
-        if (mpg > 20) return 'Medium';
-        return 'Low';
+    // --| Efficiency calculation
+    getEfficiency = (mpg?: number): 'High' | 'Medium' | 'Low' => {
+        const value = mpg ?? 0;
+
+        switch (true) {
+            case value > 30:
+                return 'High';
+
+            case value > 20:
+                return 'Medium';
+
+            default:
+                return 'Low';
+        }
     };
 }
