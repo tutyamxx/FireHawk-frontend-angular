@@ -1,58 +1,39 @@
-# Frontend
+# FireHawk Systems - Car API Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+- It is developed to work with [FireHawk Systems - Car API Backend](https://github.com/tutyamxx/FireHawk-backend)
 
-## Development server
+## ⚙️ Installation
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Clone the project
 
 ```bash
-ng generate component component-name
+git clone git@github.com:tutyamxx/FireHawk-frontend-angular.git
+cd FireHawk-frontend-angular/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Install dependencies
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+## ▶️ Running Locally
 
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## ✨ Run prettier
+```bash
+npm run format
+```
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## ⚙️ Run production build
 
 ```bash
-ng test
+npm build
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 
