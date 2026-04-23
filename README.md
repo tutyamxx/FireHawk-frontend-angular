@@ -24,6 +24,8 @@ npm install
 
 ## ▶️ Running Locally
 
+- Make sure you create a file in `environments/environment.ts` and paste the code from `environments/environment.example.ts` (This file is git ignored for security)
+
 ```bash
 npm start
 ```
