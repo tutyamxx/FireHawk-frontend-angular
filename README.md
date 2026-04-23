@@ -1,5 +1,9 @@
 # FireHawk Systems - Car API Frontend Angular
 
+<p align="center">
+  <img src="./frontend.PNG" alt="Frontend" width="50%" />
+</p>
+
 - This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
 - It is developed to work with [FireHawk Systems - Car API Backend](https://github.com/tutyamxx/FireHawk-backend)
 
