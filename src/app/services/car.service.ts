@@ -5,7 +5,7 @@ import { Car } from '../models/car.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class CarService {
     private apiUrl = `${environment?.apiUrl}/cars`;
@@ -25,7 +25,7 @@ export class CarService {
             ...car,
             make: car?.make ?? '',
             model: car?.model ?? '',
-            efficiency: this.getEfficiency(mpg),
+            efficiency: this.getEfficiency(mpg)
         };
     };
 

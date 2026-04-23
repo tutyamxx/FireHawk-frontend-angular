@@ -10,7 +10,7 @@ import { CarTableComponent } from './components/car-table/car-table.component';
             <app-car-table />
         </div>
     `,
-    styleUrl: './app.css',
+    styleUrl: './app.css'
 })
 export class App {
     protected readonly title = signal('frontend');

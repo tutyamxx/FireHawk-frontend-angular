@@ -5,6 +5,8 @@
     "useTabs": false,
     "bracketSpacing": true,
     "arrowParens": "avoid",
+    "trailingComma": "none",
+    "semi": true,
     "overrides": [
         {
             "files": "*.html",

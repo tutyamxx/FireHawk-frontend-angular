@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Car } from '../models/car.model';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class CsvService {
     export = (cars: Car[]): void => {

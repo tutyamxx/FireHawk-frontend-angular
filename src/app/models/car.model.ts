@@ -4,7 +4,7 @@ export interface Car {
     name?: string;
 
     mpg?: number;
-    cylinders?: number;
+    cylinders?: number | '';
     displacement?: number;
     horsepower?: number;
     weight?: number;
@@ -14,5 +14,5 @@ export interface Car {
 
     make?: string;
     model?: string;
-    efficiency?: 'High' | 'Medium' | 'Low';
+    efficiency: 'High' | 'Medium' | 'Low' | '';
 }

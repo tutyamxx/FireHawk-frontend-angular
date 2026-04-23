@@ -30,16 +30,28 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
-        MatProgressSpinnerModule,
+        MatProgressSpinnerModule
     ],
     templateUrl: './car-table.component.html',
-    styleUrl: './car-table.component.css',
+    styleUrl: './car-table.component.css'
 })
+
+/**
+ * Car table component responsible for:
+ * - Fetching cars from Firestore
+ * - Filtering and searching dataset
+ * - Pagination
+ * - CSV export
+ * - Persisting filters in storage
+ */
 export class CarTableComponent implements OnInit {
     cars: Car[] = [];
     filteredCars: Car[] = [];
     pagedCars: Car[] = [];
 
+    /**
+     * Table column definitions for Angular Material table
+     */
     displayedColumns: string[] = ['make', 'model', 'mpg', 'cylinders', 'horsepower', 'year', 'origin', 'efficiency'];
 
     filters: any = {};
@@ -53,9 +65,15 @@ export class CarTableComponent implements OnInit {
     constructor(
         private carService: CarService,
         private storage: StorageService,
-        private csv: CsvService,
+        private csv: CsvService
     ) {}
 
+    /**
+     * Lifecycle hook:
+     * - Loads saved filters + search term from storage
+     * - Fetches car data from Firestore
+     * - Initializes filtered view
+     */
     ngOnInit(): void {
         const savedFilters = this.storage.load('filters');
         this.filters = savedFilters || {};
@@ -75,27 +93,44 @@ export class CarTableComponent implements OnInit {
                 this.cars = [];
                 this.filteredCars = [];
                 this.pagedCars = [];
-            },
+            }
         });
     }
 
+    /**
+     * Applies:
+     * - field filters (make, origin, cylinders, efficiency)
+     * - global search across all fields
+     * Resets pagination to page 1.
+     */
     applyFilters = (): void => {
         const search = this.searchTerm.toLowerCase();
+        const { make, origin, cylinders, efficiency } = this.filters || {};
 
-        this.filteredCars = (this.cars || [])
-            .filter(
-                car =>
-                    (car?.make ?? '').toLowerCase().includes(this.filters?.make?.toLowerCase() || '') &&
-                    (car?.origin ?? '').toLowerCase().includes(this.filters?.origin?.toLowerCase() || '') &&
-                    (this.filters?.cylinders ? car?.cylinders === Number(this.filters.cylinders) : true) &&
-                    (this.filters?.efficiency ? car?.efficiency === this.filters.efficiency : true),
-            )
-            .filter(car => Object.values(car || {}).some(v => (v ?? '').toString().toLowerCase().includes(search)));
+        this.filteredCars = (this.cars ?? []).filter(car => {
+            const matchesMake = !make || car?.make?.toLowerCase().includes(make.toLowerCase());
+            const matchesOrigin = !origin || car?.origin?.toLowerCase().includes(origin.toLowerCase());
+            const matchesCyl = !cylinders || car?.cylinders === Number(cylinders);
+            const matchesEff = !efficiency || car?.efficiency === efficiency;
+
+            const matchesSearch =
+                !search ||
+                Object.values(car ?? {}).some(v =>
+                    String(v ?? '')
+                        .toLowerCase()
+                        .includes(search)
+                );
+
+            return matchesMake && matchesOrigin && matchesCyl && matchesEff && matchesSearch;
+        });
 
         this.pageIndex = 0;
         this.updatePagedCars();
     };
 
+    /**
+     * Updates paginated slice of filtered cars
+     */
     updatePagedCars(): void {
         const start = this.pageIndex * this.pageSize;
         const end = start + this.pageSize;
@@ -103,6 +138,9 @@ export class CarTableComponent implements OnInit {
         this.pagedCars = this.filteredCars.slice(start, end);
     }
 
+    /**
+     * Handles Angular Material paginator changes
+     */
     onPageChange(event: PageEvent): void {
         this.pageIndex = event.pageIndex;
         this.pageSize = event.pageSize;
@@ -110,12 +148,16 @@ export class CarTableComponent implements OnInit {
         this.updatePagedCars();
     }
 
+    /**
+     * Resets all filters and search state,
+     * clears storage, and refreshes table
+     */
     resetFilters(): void {
         this.filters = {
             make: '',
             origin: '',
             cylinders: '',
-            efficiency: '',
+            efficiency: ''
         };
 
         this.searchTerm = '';
@@ -126,6 +168,9 @@ export class CarTableComponent implements OnInit {
         this.applyFilters();
     }
 
+    /**
+     * Triggered when filter component emits new values
+     */
     onFiltersChanged = (filters: any): void => {
         this.filters = filters || {};
         this.storage.save('filters', this.filters);
@@ -133,11 +178,17 @@ export class CarTableComponent implements OnInit {
         this.applyFilters();
     };
 
+    /**
+     * Triggered on search input change
+     */
     onSearchChanged = (): void => {
         this.storage.save('searchTerm', this.searchTerm);
         this.applyFilters();
     };
 
+    /**
+     * Exports currently filtered dataset as CSV
+     */
     exportCSV = (): void => {
         this.csv.export(this.filteredCars);
     };

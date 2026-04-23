@@ -10,6 +10,6 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
 
         // --| HTTP client for backend API calls
-        provideHttpClient(),
-    ],
+        provideHttpClient()
+    ]
 };
