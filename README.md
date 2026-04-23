@@ -24,6 +24,8 @@ npm install
 npm start
 ```
 
+- Will fire it up on [http://localhost:4200/](http://localhost:4200/)
+
 ## ✨ Run prettier
 ```bash
 npm run format
