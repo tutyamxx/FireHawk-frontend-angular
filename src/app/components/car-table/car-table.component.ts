@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// --| Car stuff imports
 import { CarService } from '../../services/car.service';
 import { StorageService } from '../../services/storage.service';
 import { CsvService } from '../../services/csv.service';
 import { Car } from '../../models/car.model';
 import { FiltersComponent } from '../filters/filters.component';
 
+// --| Angular Material imports
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -113,13 +115,8 @@ export class CarTableComponent implements OnInit {
             const matchesCyl = !cylinders || car?.cylinders === Number(cylinders);
             const matchesEff = !efficiency || car?.efficiency === efficiency;
 
-            const matchesSearch =
-                !search ||
-                Object.values(car ?? {}).some(v =>
-                    String(v ?? '')
-                        .toLowerCase()
-                        .includes(search)
-                );
+            // prettier-ignore
+            const matchesSearch = !search || Object.values(car ?? {}).some(v => String(v ?? '').toLowerCase().includes(search));
 
             return matchesMake && matchesOrigin && matchesCyl && matchesEff && matchesSearch;
         });

@@ -9,8 +9,7 @@ import { CarTableComponent } from './components/car-table/car-table.component';
         <div class="app-container">
             <app-car-table />
         </div>
-    `,
-    styleUrl: './app.css'
+    `
 })
 export class App {
     protected readonly title = signal('frontend');
